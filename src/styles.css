@@ -1,0 +1,99 @@
+/*
+  The app's styles, all inside its shadow root (src/index.js): the page's CSS
+  cannot reach it, and none of this reaches the page. Tailwind's theme goes on
+  `:root, :host` already; shadcn's tokens go on :host here.
+*/
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@source "./";
+
+@custom-variant dark (&:is(.dark *));
+
+/* What the page would hand down through the host (font, colour, line height,
+   text-transform…), reset; the host itself is the overlay the app draws in. */
+:host {
+  all: initial;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  color-scheme: light;
+}
+
+:host {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  /* what the tools mark as changed, and the outlines they draw on the page */
+  --changed: oklch(0.852 0.199 91.936);
+  --highlight: oklch(0.623 0.214 259.815);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-changed: var(--changed);
+  --color-highlight: var(--highlight);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /* the app's own surfaces take pointer events; the overlay around them doesn't */
+  [data-panel] {
+    @apply bg-background text-foreground pointer-events-auto font-sans text-sm antialiased;
+  }
+}
+
+/* Vue's <style> blocks would land outside the shadow root: the app's few
+   rules of its own are here */
+
+/* the easing editor's preview: a dot crossing back and forth with the easing */
+.easing-preview {
+  animation: easing-preview 1.6s infinite alternate;
+}
+
+@keyframes easing-preview {
+  to {
+    left: calc(100% - 0.5rem);
+  }
+}
