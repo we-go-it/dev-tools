@@ -1,0 +1,8 @@
+# left out of what yarn installs from a tag (git archive): the build in dist/ is the package
+/src export-ignore
+/vite.config.js export-ignore
+/jsconfig.json export-ignore
+/components.json export-ignore
+/yarn.lock export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
